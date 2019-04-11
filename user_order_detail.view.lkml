@@ -9,7 +9,6 @@ view: user_order_detail {
         , SUM(TOTAL) AS lifetime_revenue
         , MIN(NULLIF(PAID_AT,0)) AS first_order_date
         , MAX(NULLIF(PAID_AT,0)) AS latest_order_date
-        , COUNT(DISTINCT DATE_TRUNC('month', NULLIF(PAID_AT,0))) AS number_of_distinct_months_with_orders
       FROM OARS_AND_ALPS
       GROUP BY EMAIL;;
   }
