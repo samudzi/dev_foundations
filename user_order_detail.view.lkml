@@ -94,6 +94,7 @@ view: user_order_detail {
     drill_fields: [detail*]
   }
 
+
   measure: average_lifetime_orders {
     type: average
     sql: ${lifetime_orders} ;;
@@ -133,6 +134,12 @@ view: user_order_detail {
       value: "Yes"
     }
   }
+
+  measure: average_items_per_order {
+    type: number
+    sql:  ;;
+  }
+
 
   measure: active_user_count {
     type: count
