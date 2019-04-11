@@ -2,7 +2,6 @@ view: oars_and_alps {
   sql_table_name: OARS_AND_ALPS.OARS_AND_ALPS ;;
 
   dimension: id {
-    primary_key: yes
     type: string
     sql: ${TABLE}."ID" ;;
   }
@@ -129,6 +128,7 @@ view: oars_and_alps {
   dimension: email {
     type: string
     sql: ${TABLE}."EMAIL" ;;
+    primary_key: yes
   }
 
   dimension: employee {
