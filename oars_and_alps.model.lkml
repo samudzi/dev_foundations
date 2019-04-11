@@ -14,6 +14,6 @@ explore: oars_and_alps {
   join: user_order_detail {
     type: left_outer
     relationship: many_to_many
-    sql: ${oars_and_alps.email}=${user_order_detail.email} ;;
+    sql_on: ${oars_and_alps.email}=${user_order_detail.email} ;;
   }
 }
