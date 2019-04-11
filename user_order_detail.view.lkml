@@ -7,8 +7,8 @@ view: user_order_detail {
         EMAIL
         , COUNT(DISTINCT NAME) AS lifetime_orders
         , SUM(TOTAL) AS lifetime_revenue
-        , MIN(NULLIF(PAID_AT,0)) AS first_order_date
-        , MAX(NULLIF(PAID_AT,0)) AS latest_order_date
+        , MIN(PAID_AT) AS first_order_date
+        , MAX(PAID_AT) AS latest_order_date
       FROM OARS_AND_ALPS
       GROUP BY EMAIL;;
   }
