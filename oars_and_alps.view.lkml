@@ -13,6 +13,7 @@ view: oars_and_alps {
 
   dimension_group: _fivetran_synced {
     type: time
+    hidden: yes
     timeframes: [
       raw,
       time,
@@ -26,6 +27,7 @@ view: oars_and_alps {
   }
 
   dimension: _line {
+    hidden: yes
     type: string
     sql: ${TABLE}._LINE ;;
   }
@@ -222,6 +224,7 @@ view: oars_and_alps {
   }
 
   dimension_group: paid {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -403,6 +406,12 @@ view: oars_and_alps {
   dimension: vendor {
     type: string
     sql: ${TABLE}.VENDOR ;;
+  }
+
+  dimension: months_since_signup {
+    type: duration_month
+    sql_start: ${paid_date} ;;
+    sql_end: current_date ;;
   }
 
   measure: count {

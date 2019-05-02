@@ -7,27 +7,27 @@ view: order_patterns {
 FROM   (SELECT oars_and_alps.email                          AS user_id,
                oars_and_alps.id                               AS order_id,
                oars_and_alps.lineitem_sku                                   AS product,
-               Min(oars_and_alps.paid_at)
+               Min(oars_and_alps.created_at)
                  OVER(
                    partition BY oars_and_alps.email)        AS first_ordered_date,
-               oars_and_alps.paid_at                       AS ordered,
+               oars_and_alps.created_at                       AS ordered,
                Count(oars_and_alps.id)
                  OVER(
                    partition BY oars_and_alps.email)        AS lifetime_orders,
                Row_number()
                  OVER(
                    partition BY oars_and_alps.email
-                   ORDER BY oars_and_alps.paid_at)         AS order_sequence_number,
-               Lead(oars_and_alps.paid_at)
+                   ORDER BY oars_and_alps.created_at)         AS order_sequence_number,
+               Lead(oars_and_alps.created_at)
                  OVER(
                    partition BY oars_and_alps.email
-                   ORDER BY oars_and_alps.paid_at)         AS second_created_at,
-               Datediff(day, Cast(oars_and_alps.paid_at AS DATE
+                   ORDER BY oars_and_alps.created_at)         AS second_created_at,
+               Datediff(day, Cast(oars_and_alps.created_at AS DATE
                              ),
-               Cast(Lead(oars_and_alps.paid_at)
+               Cast(Lead(oars_and_alps.created_at)
                OVER(partition BY oars_and_alps.email
-                 ORDER BY oars_and_alps.paid_at) AS DATE)) AS repurchase_gap,
-               Datediff(day, CURRENT_DATE, Cast(Min(oars_and_alps.paid_at)
+                 ORDER BY oars_and_alps.created_at) AS DATE)) AS repurchase_gap,
+               Datediff(day, CURRENT_DATE, Cast(Min(oars_and_alps.created_at)
                OVER(
                  partition BY oars_and_alps.email) AS DATE)) AS days_since_first_order
         FROM   oars_and_alps
