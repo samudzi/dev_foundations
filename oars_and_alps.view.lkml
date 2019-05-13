@@ -172,23 +172,14 @@ view: oars_and_alps {
     sql: ${TABLE}.LINEITEM_SKU ;;
   }
 
-  filter: deo_kit_skus {
-    type: string
-  }
-
-  filter: deo_stick_skus {
-    type: string
-  }
-
   dimension: is_deo_kit {
-    type: yesno
-    sql: sql: {% condition deo_kit_skus %} ${lineitem_sku} {% endcondition %} ;;
+    type: string
+    sql: case
+        when ${lineitem_name} like '%Deo Kit%' then 'Is Deo Kit'
+        when ${lineitem_name} like '%Deo' and not like '%Deo Kit' then 'Is Deo Solo'
+        else 'Not Deo' end;;
   }
 
-  dimension: is_deo_stick {
-    type: yesno
-    sql: sql: {% condition deo_stick_skus %} ${lineitem_sku} {% endcondition %} ;;
-  }
 
   dimension: lineitem_taxable {
     type: yesno
