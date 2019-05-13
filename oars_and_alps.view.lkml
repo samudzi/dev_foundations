@@ -175,8 +175,8 @@ view: oars_and_alps {
   dimension: is_deo_kit {
     type: string
     sql: case
-        when ${lineitem_name} like '%Deo Kit%' then 'Is Deo Kit'
-        when ${lineitem_name} like '%Deo' and not like '%Deo Kit' then 'Is Deo Solo'
+        when ${lineitem_sku} like '%DEO-3%' then 'Is Deo Kit'
+        when ${lineitem_sku} like '%DEO-2' then 'Is Deo Solo'
         else 'Not Deo' end;;
   }
 
