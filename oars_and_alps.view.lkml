@@ -6,30 +6,9 @@ view: oars_and_alps {
     sql: ${TABLE}.ID ;;
   }
 
-  dimension: _file {
+  dimension: first_order_items {
     type: string
-    sql: ${TABLE}._FILE ;;
-  }
-
-  dimension_group: _fivetran_synced {
-    type: time
-    hidden: yes
-    timeframes: [
-      raw,
-      time,
-      date,
-      week,
-      month,
-      quarter,
-      year
-    ]
-    sql: ${TABLE}._FIVETRAN_SYNCED ;;
-  }
-
-  dimension: _line {
-    hidden: yes
-    type: string
-    sql: ${TABLE}._LINE ;;
+    sql:  (select ${lineitem_sku} from ${TABLE} where ${order_patterns.order_sequence_number} = 1);;
   }
 
   dimension: accepts_marketing {
@@ -191,6 +170,24 @@ view: oars_and_alps {
   dimension: lineitem_sku {
     type: string
     sql: ${TABLE}.LINEITEM_SKU ;;
+  }
+
+  filter: deo_kit_skus {
+    type: string
+  }
+
+  filter: deo_stick_skus {
+    type: string
+  }
+
+  dimension: is_deo_kit {
+    type: yesno
+    sql: sql: {% condition deo_kit_skus %} ${lineitem_sku} {% endcondition %} ;;
+  }
+
+  dimension: is_deo_stick {
+    type: yesno
+    sql: sql: {% condition deo_stick_skus %} ${lineitem_sku} {% endcondition %} ;;
   }
 
   dimension: lineitem_taxable {
@@ -410,7 +407,7 @@ view: oars_and_alps {
 
   dimension: months_since_signup {
     type: duration_month
-    sql_start: ${paid_date} ;;
+    sql_start: ${TABLE}.CREATED_AT ;;
     sql_end: current_date ;;
   }
 

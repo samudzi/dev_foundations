@@ -29,6 +29,7 @@ view: user_order_detail {
     sql: ${TABLE}.first_order_date ;;
   }
 
+
   dimension_group: latest_order {
     type: time
     sql: ${TABLE}.latest_order_date ;;
